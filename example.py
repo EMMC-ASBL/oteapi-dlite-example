@@ -19,19 +19,27 @@ CHEM = Namespace("http://onto-ns.com/meta/0.3/Chemistry#")
 
 #client = OTEClient("python")
 client = OTEClient("http://localhost:8080")
+#client = OTEClient("python")
 
 temdata  = "https://folk.ntnu.no/friisj/temdata/"
 
 # Partial pipeline 1: Parse raw TEM image
+
 tem_resource = client.create_dataresource(
+    resourceType="resource/url",
     downloadUrl=f"{temdata}/{temimage}.dm3",
-    mediaType="application/vnd.dlite-parse",
+    mediaType="temimage/dm3", ## Just a guess  
+)
+ 
+tem_parser = client.create_parser(
+    parserType="application/vnd.dlite-parse",
+    entity="http://onto-ns.com/meta/0.1/TEMImage",
     configuration={
         "driver": "dm3",
         "label": f"{temimage}",
     },
 )
-
+ 
 tem_mapping = client.create_mapping(
     mappingType="mappings",
     prefixes={
@@ -135,9 +143,16 @@ stat_generate = client.create_function(
 
 
 # Partial pipeline 5: Parse alloy composition
+
 comp_resource = client.create_dataresource(
-    downloadUrl=("https://raw.githubusercontent.com/SINTEF/dlite/refs/heads/master/examples/TEM_data/data/composition.csv"),
-    mediaType="application/vnd.dlite-parse",
+    resourceType="resource/url",
+    downloadUrl="https://raw.githubusercontent.com/SINTEF/dlite/refs/heads/master/examples/TEM_data/data/composition.csv",
+    mediaType="text/csv", 
+)
+ 
+comp_parser = client.create_parser(
+    parserType="application/vnd.dlite-parse",
+    entity="http://onto-ns.com/meta/0.1/Composition",
     configuration={
         "driver": "composition",
         "label": "composition",
@@ -207,11 +222,12 @@ if False:
     )
     pipeline.get()
 else:
-    pipe1 = tem_resource >> tem_mapping
+    print("Creating and running pipeline")
+    pipe1 = tem_resource >> tem_parser >> tem_mapping
     pipe2 = image_mapping >> image_generate
     pipe3 = settings_generate
-    pipe4 = stat_convert #>> stat_mapping >> stat_generate
-    pipe5 = comp_resource >> comp_mapping
+    pipe4 = stat_convert >> stat_mapping >> stat_generate
+    pipe5 = comp_resource >> comp_parser >> comp_mapping
     pipe6 = chem_mapping >> chem_generate
-    pipeline = pipe1 >> pipe2 >> pipe3 >> pipe4 #>> pipe5 >> pipe6
+    pipeline = pipe1 >> pipe2 >> pipe3 >> pipe4 >> pipe5 >> pipe6
     pipeline.get()

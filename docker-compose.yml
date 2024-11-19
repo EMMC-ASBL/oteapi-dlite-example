@@ -14,7 +14,7 @@ services:
       OTEAPI_prefix: "${OTEAPI_prefix:-/api/v1}"
       OTEAPI_INCLUDE_REDISADMIN: "${OTEAPI_INCLUDE_REDISADMIN:-False}"
       OTEAPI_EXPOSE_SECRETS: "${OTEAPI_EXPOSE_SECRETS:-True}"
-      OTEAPI_PLUGIN_PACKAGES: "oteapi-dlite"
+      OTEAPI_PLUGIN_PACKAGES: "-v git+https://github.com/EMMC-ASBL/oteapi-dlite@cwa/close-303-update-to-dev-core-versions"
       OTEAPI_AUTHENTICAION_DEPENDENCIES:
       DLITE_STORAGES: "/datamodels"
       DLITE_PYTHON_STORAGE_PLUGIN_DIRS: "/plugins"
