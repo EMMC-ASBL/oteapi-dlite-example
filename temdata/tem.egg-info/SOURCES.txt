@@ -1,7 +1,0 @@
-setup.py
-src/__init__.py
-src/tem.py
-tem.egg-info/PKG-INFO
-tem.egg-info/SOURCES.txt
-tem.egg-info/dependency_links.txt
-tem.egg-info/top_level.txt

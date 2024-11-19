@@ -1,7 +1,0 @@
-setup.py
-temdata/__init__.py
-temdata/tem.py
-temdata.egg-info/PKG-INFO
-temdata.egg-info/SOURCES.txt
-temdata.egg-info/dependency_links.txt
-temdata.egg-info/top_level.txt
