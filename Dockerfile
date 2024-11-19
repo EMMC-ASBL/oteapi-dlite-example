@@ -1,5 +1,5 @@
 # Use the existing image as the base image
-FROM ghcr.io/emmc-asbl/oteapi:latest
+FROM ghcr.io/emmc-asbl/oteapi:1.20240228.345
 
 # Set the working directory inside the container
 WORKDIR /app
