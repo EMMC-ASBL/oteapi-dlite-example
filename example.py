@@ -91,7 +91,7 @@ settings_generate = client.create_function(
 stat_convert = client.create_function(
     functionType="application/vnd.dlite-convert",
     configuration={
-        "module_name": "temdata.tem",
+        "module_name": "imageanalyser.tem",
         "function_name": "image_analyser",
         "inputs": [
             {"label": f"{temimage}"},

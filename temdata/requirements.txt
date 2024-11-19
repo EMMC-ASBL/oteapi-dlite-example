@@ -1,2 +1,0 @@
-otelib==0.4.1
-tripper==0.3.4
