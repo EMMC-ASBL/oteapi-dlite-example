@@ -1,4 +1,5 @@
 """Image analyser."""
+
 import json
 
 import dlite
