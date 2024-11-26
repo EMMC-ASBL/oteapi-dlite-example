@@ -12,10 +12,11 @@ Example:
    source /path/to/your/environments/myenv
    ```
 
-Install the requirements needed locally:
+Install the python requirements needed locally:
    ```bash
    pip install -r requirements.txt
    ```
+Additionally you need to have docker installed (not as python package).
 
 Build and create the docker image:
    ```bash
