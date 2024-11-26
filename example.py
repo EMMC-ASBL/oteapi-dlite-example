@@ -17,20 +17,20 @@ PS = Namespace("http://onto-ns.com/meta/0.1/PrecipitateStatistics#")
 COMP = Namespace("http://onto-ns.com/meta/0.1/Composition#")
 CHEM = Namespace("http://onto-ns.com/meta/0.3/Chemistry#")
 
-#client = OTEClient("python")
+# client = OTEClient("python")
 client = OTEClient("http://localhost:8080")
-#client = OTEClient("python")
+# client = OTEClient("python")
 
-temdata  = "https://folk.ntnu.no/friisj/temdata/"
+temdata = "https://folk.ntnu.no/friisj/temdata/"
 
 # Partial pipeline 1: Parse raw TEM image
 
 tem_resource = client.create_dataresource(
     resourceType="resource/url",
     downloadUrl=f"{temdata}/{temimage}.dm3",
-    mediaType="temimage/dm3", ## Just a guess  
+    mediaType="temimage/dm3",  ## Just a guess
 )
- 
+
 tem_parser = client.create_parser(
     parserType="application/vnd.dlite-parse",
     entity="http://onto-ns.com/meta/0.1/TEMImage",
@@ -39,7 +39,7 @@ tem_parser = client.create_parser(
         "label": f"{temimage}",
     },
 )
- 
+
 tem_mapping = client.create_mapping(
     mappingType="mappings",
     prefixes={
@@ -49,11 +49,11 @@ tem_mapping = client.create_mapping(
         "oteio": str(OTEIO),
     },
     triples=[
-        (TEMIMAGE.filename,  MAP.mapsTo, OTEIO.FileName),
-        (TEMIMAGE.data,      MAP.mapsTo, EMMO.Array),
+        (TEMIMAGE.filename, MAP.mapsTo, OTEIO.FileName),
+        (TEMIMAGE.data, MAP.mapsTo, EMMO.Array),
         (TEMIMAGE.pixelUnit, MAP.mapsTo, EMMO.Unit),
         (TEMIMAGE.pixelSize, MAP.mapsTo, EMMO.Length),
-        (TEMIMAGE.metadata,  MAP.mapsTo, OTEIO.Dictionary),
+        (TEMIMAGE.metadata, MAP.mapsTo, OTEIO.Dictionary),
     ],
 )
 
@@ -68,8 +68,8 @@ image_mapping = client.create_mapping(
         "oteio": str(OTEIO),
     },
     triples=[
-        (IMAGE.filename,  MAP.mapsTo, OTEIO.FileName),
-        (IMAGE.data,      MAP.mapsTo, EMMO.Array),
+        (IMAGE.filename, MAP.mapsTo, OTEIO.FileName),
+        (IMAGE.data, MAP.mapsTo, EMMO.Array),
     ],
 )
 
@@ -120,13 +120,13 @@ stat_mapping = client.create_mapping(
         "oteio": str(OTEIO),
     },
     triples=[
-        (PS.alloy,             MAP.mapsTo, MO.Alloy),
-        (PS.condition,         MAP.mapsTo, MO.AlloyCondition),
-        (PS.precipitate,       MAP.mapsTo, MO.Precipitate),
-        (PS.number_density,    MAP.mapsTo, EMMO.ParticleNumberDensity),
-        (PS.avg_length,        MAP.mapsTo, MO.PrecipitateLength),
-        (PS.avg_crossection,   MAP.mapsTo, MO.PrecipitateCrossection),
-        (PS.volume_fraction,   MAP.mapsTo, EMMO.VolumeFraction),
+        (PS.alloy, MAP.mapsTo, MO.Alloy),
+        (PS.condition, MAP.mapsTo, MO.AlloyCondition),
+        (PS.precipitate, MAP.mapsTo, MO.Precipitate),
+        (PS.number_density, MAP.mapsTo, EMMO.ParticleNumberDensity),
+        (PS.avg_length, MAP.mapsTo, MO.PrecipitateLength),
+        (PS.avg_crossection, MAP.mapsTo, MO.PrecipitateCrossection),
+        (PS.volume_fraction, MAP.mapsTo, EMMO.VolumeFraction),
         (PS.avg_atomic_volume, MAP.mapsTo, MO.AtomicVolume),
     ],
 )
@@ -147,9 +147,9 @@ stat_generate = client.create_function(
 comp_resource = client.create_dataresource(
     resourceType="resource/url",
     downloadUrl="https://raw.githubusercontent.com/SINTEF/dlite/refs/heads/master/examples/TEM_data/data/composition.csv",
-    mediaType="text/csv", 
+    mediaType="text/csv",
 )
- 
+
 comp_parser = client.create_parser(
     parserType="application/vnd.dlite-parse",
     entity="http://onto-ns.com/meta/0.1/Composition",
@@ -168,11 +168,11 @@ comp_mapping = client.create_mapping(
         "emmo": str(EMMO),
     },
     triples=[
-        (COMP.alloy,               MAP.mapsTo, MO.Alloy),
-        (COMP.elements,            MAP.mapsTo, EMMO.ChemicalElement),
-        (COMP.phases,              MAP.mapsTo, MO.Phase),
+        (COMP.alloy, MAP.mapsTo, MO.Alloy),
+        (COMP.elements, MAP.mapsTo, EMMO.ChemicalElement),
+        (COMP.phases, MAP.mapsTo, MO.Phase),
         (COMP.nominal_composition, MAP.mapsTo, MO.NominalComposition),
-        (COMP.phase_compositions,  MAP.mapsTo, MO.PhaseComposition),
+        (COMP.phase_compositions, MAP.mapsTo, MO.PhaseComposition),
     ],
 )
 
@@ -187,15 +187,15 @@ chem_mapping = client.create_mapping(
         "emmo": str(EMMO),
     },
     triples=[
-        (CHEM.alloy,       MAP.mapsTo, MO.Alloy),
-        (CHEM.elements,    MAP.mapsTo, EMMO.ChemicalElement),
-        (CHEM.phases,      MAP.mapsTo, MO.Phase),
-        (CHEM.X0,          MAP.mapsTo, MO.NominalComposition),
-        (CHEM.Xp,          MAP.mapsTo, MO.PhaseComposition),
-        (CHEM.volfrac,     MAP.mapsTo, EMMO.VolumeFraction),
-        #(CHEM.rpart,       MAP.mapsTo, MO.ParticleSize),
-        (CHEM.rpart,       MAP.mapsTo, MO.PrecipitateLength),  # XXX FIXME
-        (CHEM.atvol,       MAP.mapsTo, MO.AtomicVolume),
+        (CHEM.alloy, MAP.mapsTo, MO.Alloy),
+        (CHEM.elements, MAP.mapsTo, EMMO.ChemicalElement),
+        (CHEM.phases, MAP.mapsTo, MO.Phase),
+        (CHEM.X0, MAP.mapsTo, MO.NominalComposition),
+        (CHEM.Xp, MAP.mapsTo, MO.PhaseComposition),
+        (CHEM.volfrac, MAP.mapsTo, EMMO.VolumeFraction),
+        # (CHEM.rpart,       MAP.mapsTo, MO.ParticleSize),
+        (CHEM.rpart, MAP.mapsTo, MO.PrecipitateLength),  # XXX FIXME
+        (CHEM.atvol, MAP.mapsTo, MO.AtomicVolume),
     ],
 )
 
@@ -213,12 +213,18 @@ chem_generate = client.create_function(
 # Run pipeline
 if False:
     pipeline = (
-        tem_resource >> tem_mapping >>
-        image_mapping >> image_generate >>
-        settings_generate >>
-        stat_convert >> stat_mapping >> stat_generate >>
-        comp_resource >> comp_mapping >>
-        chem_mapping >> chem_generate
+        tem_resource
+        >> tem_mapping
+        >> image_mapping
+        >> image_generate
+        >> settings_generate
+        >> stat_convert
+        >> stat_mapping
+        >> stat_generate
+        >> comp_resource
+        >> comp_mapping
+        >> chem_mapping
+        >> chem_generate
     )
     pipeline.get()
 else:
