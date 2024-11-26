@@ -2,6 +2,7 @@ version: "3"
 
 services:
   oteapi:
+    image: ghcr.io/emmc-asbl/oteapi:latest
     build:
       context: .
       dockerfile: Dockerfile
